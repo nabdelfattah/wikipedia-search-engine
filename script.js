@@ -4,7 +4,7 @@ const validateInput = (el) => {
     if(el.value === ""){
         resultsContainer.innerHTML = "<p>Type something in the above search input</p>"
     }else{
-        generateResults(el.value, el)
+        debounceSearch(el.value, el)
     }
 }
 
@@ -35,3 +35,15 @@ const generateResults = (searchValue, inputField) => {
         }
     })
 }
+
+function debounce (func, delay=1000) {
+    let timeoutId;
+    return function (...args){
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            func(...args)
+        }, delay)
+    }
+}
+
+const debounceSearch = debounce((searchValue, inputField) => generateResults(searchValue, inputField));
